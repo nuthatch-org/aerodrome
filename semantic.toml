@@ -1,0 +1,197 @@
+# semantic.toml - what this nest's data *means* (RFC-0016). Read by the MCP `schema`
+# tool, the admin UI, and the scaffolded skill. Edit descriptions freely; the
+# `[table.*.footguns]` are DERIVED from the ABI and regenerated - leave them be.
+
+schema_version = 1
+
+[nest]
+description = "The `aerodrome` nest on base. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.factory__pool_created]
+description = "`PoolCreated(address,address,bool,address,uint256)` events emitted by the `factory` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per PoolCreated(address,address,bool,address,uint256) event"
+
+[table.factory__pool_created.columns]
+arg4 = "The `arg4` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+pool = "The `pool` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+stable = "The `stable` bool parameter - stored as exact text `'true'`/`'false'`, not a SQL boolean. `stable = true` and `AND`/`NOT` implicitly cast and work; `COALESCE`, `CASE`, `bool_and`/`bool_or` and `UNION` do not. Write `stable = 'true'` or `CAST(stable AS BOOLEAN)`. (seeded from the ABI - edit semantic.toml to improve this)"
+token0 = "The `token0` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+token1 = "The `token1` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.factory__pool_created.footguns]
+big_ints = ["arg4"]
+overflows_dec = ["arg4"]
+bools = ["stable"]
+
+[table.factory__set_custom_fee]
+description = "`SetCustomFee(address,uint256)` events emitted by the `factory` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per SetCustomFee(address,uint256) event"
+
+[table.factory__set_custom_fee.columns]
+fee = "The `fee` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+pool = "The `pool` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.factory__set_custom_fee.footguns]
+big_ints = ["fee"]
+overflows_dec = ["fee"]
+
+[table.factory__set_fee_manager]
+description = "`SetFeeManager(address)` events emitted by the `factory` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per SetFeeManager(address) event"
+
+[table.factory__set_fee_manager.columns]
+feeManager = "The `feeManager` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.factory__set_pause_state]
+description = "`SetPauseState(bool)` events emitted by the `factory` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per SetPauseState(bool) event"
+
+[table.factory__set_pause_state.columns]
+state = "The `state` bool parameter - stored as exact text `'true'`/`'false'`, not a SQL boolean. `state = true` and `AND`/`NOT` implicitly cast and work; `COALESCE`, `CASE`, `bool_and`/`bool_or` and `UNION` do not. Write `state = 'true'` or `CAST(state AS BOOLEAN)`. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.factory__set_pause_state.footguns]
+bools = ["state"]
+
+[table.factory__set_pauser]
+description = "`SetPauser(address)` events emitted by the `factory` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per SetPauser(address) event"
+
+[table.factory__set_pauser.columns]
+pauser = "The `pauser` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.factory__set_voter]
+description = "`SetVoter(address)` events emitted by the `factory` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per SetVoter(address) event"
+
+[table.factory__set_voter.columns]
+voter = "The `voter` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.pool__burn]
+description = "`Burn(address,address,uint256,uint256)` events emitted by the `pool` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per Burn(address,address,uint256,uint256) event"
+
+[table.pool__burn.columns]
+amount0 = "The `amount0` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+amount1 = "The `amount1` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+sender = "The `sender` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+to = "The `to` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.pool__burn.footguns]
+reserved_words = ["to"]
+big_ints = [
+    "amount0",
+    "amount1",
+]
+overflows_dec = [
+    "amount0",
+    "amount1",
+]
+
+[table.pool__claim]
+description = "`Claim(address,address,uint256,uint256)` events emitted by the `pool` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per Claim(address,address,uint256,uint256) event"
+
+[table.pool__claim.columns]
+amount0 = "The `amount0` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+amount1 = "The `amount1` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+recipient = "The `recipient` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+sender = "The `sender` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.pool__claim.footguns]
+big_ints = [
+    "amount0",
+    "amount1",
+]
+overflows_dec = [
+    "amount0",
+    "amount1",
+]
+
+[table.pool__fees]
+description = "`Fees(address,uint256,uint256)` events emitted by the `pool` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per Fees(address,uint256,uint256) event"
+
+[table.pool__fees.columns]
+amount0 = "The `amount0` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+amount1 = "The `amount1` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+sender = "The `sender` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.pool__fees.footguns]
+big_ints = [
+    "amount0",
+    "amount1",
+]
+overflows_dec = [
+    "amount0",
+    "amount1",
+]
+
+[table.pool__mint]
+description = "`Mint(address,uint256,uint256)` events emitted by the `pool` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per Mint(address,uint256,uint256) event"
+
+[table.pool__mint.columns]
+amount0 = "The `amount0` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+amount1 = "The `amount1` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+sender = "The `sender` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.pool__mint.footguns]
+big_ints = [
+    "amount0",
+    "amount1",
+]
+overflows_dec = [
+    "amount0",
+    "amount1",
+]
+
+[table.pool__swap]
+description = "`Swap(address,address,uint256,uint256,uint256,uint256)` events emitted by the `pool` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per Swap(address,address,uint256,uint256,uint256,uint256) event"
+
+[table.pool__swap.columns]
+amount0In = "The `amount0In` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+amount0Out = "The `amount0Out` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+amount1In = "The `amount1In` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+amount1Out = "The `amount1Out` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+sender = "The `sender` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+to = "The `to` address parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.pool__swap.footguns]
+reserved_words = ["to"]
+big_ints = [
+    "amount0In",
+    "amount1In",
+    "amount0Out",
+    "amount1Out",
+]
+overflows_dec = [
+    "amount0In",
+    "amount1In",
+    "amount0Out",
+    "amount1Out",
+]
+
+[table.pool__sync]
+description = "`Sync(uint256,uint256)` events emitted by the `pool` contract. (seeded from the ABI - edit semantic.toml to improve this)"
+grain = "one row per Sync(uint256,uint256) event"
+
+[table.pool__sync.columns]
+reserve0 = "The `reserve0` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+reserve1 = "The `reserve1` uint256 parameter. (seeded from the ABI - edit semantic.toml to improve this)"
+
+[table.pool__sync.footguns]
+big_ints = [
+    "reserve0",
+    "reserve1",
+]
+overflows_dec = [
+    "reserve0",
+    "reserve1",
+]
+
+[view]
+
+# Authored views (views/*.sql) are described here so the MCP/`/schema` can render them:
+# [view.your_view_name]
+# description = "What this derivation computes."

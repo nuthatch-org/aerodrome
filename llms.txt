@@ -1,0 +1,33 @@
+# nuthatch nest on base
+
+A self-hosted blockchain index. Query it locally; there is no third-party API.
+
+## Contracts
+- `factory` = 0x420dd381b31aef6683db6b902084cb0ffece40da
+
+## Tables (one per contract event)
+- `factory__pool_created` - PoolCreated(address,address,bool,address,uint256) (block_number, block_hash, block_timestamp, tx_hash, log_index, address, _seq, token0, token1, stable, pool, arg4)
+- `factory__set_custom_fee` - SetCustomFee(address,uint256) (block_number, block_hash, block_timestamp, tx_hash, log_index, address, _seq, pool, fee)
+- `factory__set_fee_manager` - SetFeeManager(address) (block_number, block_hash, block_timestamp, tx_hash, log_index, address, _seq, feeManager)
+- `factory__set_pause_state` - SetPauseState(bool) (block_number, block_hash, block_timestamp, tx_hash, log_index, address, _seq, state)
+- `factory__set_pauser` - SetPauser(address) (block_number, block_hash, block_timestamp, tx_hash, log_index, address, _seq, pauser)
+- `factory__set_voter` - SetVoter(address) (block_number, block_hash, block_timestamp, tx_hash, log_index, address, _seq, voter)
+- `pool__burn` - Burn(address,address,uint256,uint256) (block_number, block_hash, block_timestamp, tx_hash, log_index, address, _seq, sender, to, amount0, amount1)
+- `pool__claim` - Claim(address,address,uint256,uint256) (block_number, block_hash, block_timestamp, tx_hash, log_index, address, _seq, sender, recipient, amount0, amount1)
+- `pool__fees` - Fees(address,uint256,uint256) (block_number, block_hash, block_timestamp, tx_hash, log_index, address, _seq, sender, amount0, amount1)
+- `pool__mint` - Mint(address,uint256,uint256) (block_number, block_hash, block_timestamp, tx_hash, log_index, address, _seq, sender, amount0, amount1)
+- `pool__swap` - Swap(address,address,uint256,uint256,uint256,uint256) (block_number, block_hash, block_timestamp, tx_hash, log_index, address, _seq, sender, to, amount0In, amount1In, amount0Out, amount1Out)
+- `pool__sync` - Sync(uint256,uint256) (block_number, block_hash, block_timestamp, tx_hash, log_index, address, _seq, reserve0, reserve1)
+
+## Live HTTP API (run `nuthatch dev`)
+- `GET /`                    index status
+- `GET /tables`              every table with its columns
+- `GET /table/{name}?limit=N` recent rows of one table (hot + sealed)
+- `GET /entity/{id}`         one row by id (`{block:012}-{logindex:06}`)
+- `GET /sql?q=SELECT...`     read-only SQL; each table is a view named `{alias}__{event}`
+- `GET /balances?limit=N`    top holder balances (when an ERC-20 Transfer table is present)
+- `GET /balance/{address}`   one address's derived balance
+
+## MCP (for coding agents)
+Run `nuthatch mcp` (stdio) to expose tools: status, schema, tables, table, sql, entity,
+balance, top_balances. Fully offline against the local instance; nothing phones home.

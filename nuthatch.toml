@@ -1,0 +1,43 @@
+[nest]
+name = "aerodrome"
+chain = "base"
+chain_id = 8453
+# A keyless public endpoint, so this file is publishable: `nuthatch.toml` is pinned into the nest's
+# content address and must never carry a credential. It is enough to follow the tip. A *backfill*
+# needs archive depth this endpoint does not have - pass your own with `--rpc`, and check it first
+# with `nuthatch doctor --rpc <url>`.
+rpc_urls = [
+    "https://mainnet.base.org",
+]
+schema_version = 1
+block_timestamps = true
+
+# The PoolFactory. `PoolCreated(token0 indexed, token1 indexed, stable indexed, pool, uint256)` -
+# note `stable`, which is the ve(3,3) shape and has no Uniswap equivalent: one factory produces two
+# genuinely different curves, a constant-product pool and a stable-swap one, and the flag in the
+# topics is the only thing distinguishing them. It arrives free in the event, so telling them apart
+# needs no contract call.
+[[contracts]]
+alias = "factory"
+address = "0x420dd381b31aef6683db6b902084cb0ffece40da"
+start_block = 3200559
+abi = "abis/factory.json"
+
+# The pool template. Its ABI could not be read from a pool: Aerodrome pools are minimal-proxy clones,
+# so every child address is unverified on both Sourcify and Blockscout. The factory's own
+# `implementation()` names the contract it clones (`0xA4e46b4f…`), and *that* is Sourcify-verified -
+# the same trick the Lido nest needs, arrived at from the other direction.
+#
+# `Fees` and `Claim` are the ve(3,3) surface proper: trading fees accrue to voters rather than to
+# liquidity providers, so a fee is its own event instead of an implicit slice of a swap. LP-share
+# `Transfer`/`Approval` are left out, as in `uniswap-v2`.
+[[templates]]
+name = "pool"
+abi = "abis/pool.json"
+
+[[factories]]
+watch = "factory"
+event = "PoolCreated"
+child_param = "pool"
+template = "pool"
+start = 3200559
