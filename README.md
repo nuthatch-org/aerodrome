@@ -1,6 +1,6 @@
 # aerodrome
 
-A [nuthatch](https://github.com/nightswatchhq/nuthatch) nest: **Aerodrome on Base**.
+A [nuthatch](https://github.com/nuthatch-org/nuthatch) nest: **Aerodrome on Base**.
 
 The ve(3,3) DEX: every pool the factory creates, its swaps, and the fee events that make ve(3,3) different.
 
@@ -26,7 +26,7 @@ Indexed blocks **50,111,962 to 50,311,269** and sealed **83,099 events**. Every 
 ## Run it
 
 ```sh
-nuthatch init --from https://github.com/nightswatchhq/aerodrome
+nuthatch init --from https://github.com/nuthatch-org/aerodrome
 cd aerodrome
 nuthatch dev --dir . --backfill 50000 --seal-direct
 nuthatch sql --dir . "SELECT count(*) FROM \"factory__pool_created\""
